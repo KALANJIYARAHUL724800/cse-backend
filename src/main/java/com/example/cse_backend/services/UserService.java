@@ -1,5 +1,7 @@
 package com.example.cse_backend.services;
 
+import com.example.cse_backend.Dto.ChangePasswordDto;
+import com.example.cse_backend.Dto.MessageInfoDto;
 import com.example.cse_backend.Dto.UserDto;
 import com.example.cse_backend.Entity.UserEntity;
 import com.example.cse_backend.repository.LoginRepository;
@@ -51,5 +53,25 @@ public class UserService {
 
         return ResponseEntity.ok("Login success");
     }
+
+    public ResponseEntity<?> updatePassword(ChangePasswordDto data) {
+        UserEntity user = loginRepository.findByEmail(data.getEmail());
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found!");
+        }
+
+        if (!data.getPassword().equals(data.getConfirmPassword())) {
+            return ResponseEntity.badRequest().body("Passwords do not match!");
+        }
+
+        user.setPassword(passwordEncoder.encode(data.getPassword()));
+        user.setConfirmPassword(passwordEncoder.encode(data.getConfirmPassword()));
+        loginRepository.save(user);
+
+        return ResponseEntity.ok("Password updated successfully!");
+    }
+
+
 
 }

@@ -13,13 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -29,14 +26,11 @@ public class UserController {
     private JwtUtil jwtUtil;
     @Autowired
     public UserService userService;
-
     @Autowired
     private MessageInfoService messageInfoService;
-
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDto data, BindingResult result) {
         if (result.hasErrors()) {
-
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error ->
                     errors.append(error.getDefaultMessage()).append("; "));
@@ -72,7 +66,14 @@ public class UserController {
         }
     }
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody MessageInfoDto data) {
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody MessageInfoDto data,BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getFieldErrors().forEach(error -> {
+                errors.append(error.getDefaultMessage()).append("; ");
+            });
+            return ResponseEntity.badRequest().body(errors.toString().trim());
+        }
         try {
             var user = loginRepository.findByEmail(data.getEmail());
             if (user != null) {
@@ -85,7 +86,6 @@ public class UserController {
         {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
         }
-
     }
     @PostMapping("/change-password")
     public ResponseEntity<?> updatePassword(@Valid @RequestBody ChangePasswordDto data, BindingResult result) {
@@ -105,5 +105,4 @@ public class UserController {
         }
         return userService.updatePassword(data);
     }
-
 }

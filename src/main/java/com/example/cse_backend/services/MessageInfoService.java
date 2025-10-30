@@ -5,6 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +29,8 @@ public class MessageInfoService {
         simpleMailMessage.setTo(message.getEmail());
         simpleMailMessage.setFrom(owner);
         simpleMailMessage.setSubject("Forgot Password from CSE " + currentDateTime);
-        String resetLink = "";
+        //String resetLink = ServletUriComponentsBuilder.fromCurrentRequest().toUriString()+"/update-password";
+        String resetLink = "http://localhost:5173/update-password";
         simpleMailMessage.setText(
                 "Dear User,\n\n" +
                         "We received a request to reset your password for your CSE Portal account.\n\n" +

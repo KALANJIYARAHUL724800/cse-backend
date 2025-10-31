@@ -80,7 +80,8 @@ public class UserController {
                 messageInfoService.sendEmail(data);
                 return ResponseEntity.ok("Successfully message sent");
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("failed");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Email not found in our records!");
             }
         }catch (Exception e)
         {

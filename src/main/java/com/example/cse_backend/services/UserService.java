@@ -38,6 +38,22 @@ public class UserService {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
+    public ResponseEntity<?> adminRegister(UserDto data)
+    {
+        if (loginRepository.existsByEmail(data.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Email already registered");
+        }
+        UserEntity user = new UserEntity();
+        user.setName(data.getName());
+        user.setEmail(data.getEmail());
+        user.setUserType(true);
+        user.setPassword(passwordEncoder.encode(data.getPassword()));
+        user.setConfirmPassword(passwordEncoder.encode(data.getConfirmPassword()));
+        UserEntity savedUser = loginRepository.save(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
     public ResponseEntity<?> userLogin(UserDto data)
     {
         UserEntity user = loginRepository.findByEmail(data.getEmail());

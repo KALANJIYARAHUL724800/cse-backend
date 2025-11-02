@@ -1,9 +1,13 @@
 package com.example.cse_backend.controller;
 
+import com.example.cse_backend.Dto.CourseDto;
 import com.example.cse_backend.Entity.CourseEntity;
 import com.example.cse_backend.services.CourseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +30,42 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
+    @PostMapping("/addcourse")
+    public ResponseEntity<?> addCourse(@Valid @RequestBody CourseDto data, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getFieldErrors().forEach(error ->
+                    errors.append(error.getField())
+                            .append(": ")
+                            .append(error.getDefaultMessage())
+                            .append("; ")
+            );
+            return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(courseService.addCourse(data), HttpStatus.OK);
+    }
+    @PutMapping("/updatecourse/{id}")
+    public ResponseEntity<?> updateCourse(@PathVariable Long id,@Valid @RequestBody CourseDto data, BindingResult result)
+    {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getFieldErrors().forEach(error ->
+                    errors.append(error.getField())
+                            .append(": ")
+                            .append(error.getDefaultMessage())
+                            .append("; ")
+            );
+            return new ResponseEntity<>(errors.toString(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(courseService.updateCourse(id,data),HttpStatus.OK);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<?> searchCourses(@RequestParam String value) {
+        List<CourseEntity> courses = courseService.searchCourseLike(value);
+        if (courses.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No courses found for: " + value);
+        }
+        return ResponseEntity.ok(courses);
+    }
 }

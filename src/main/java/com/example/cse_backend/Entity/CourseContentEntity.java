@@ -39,6 +39,9 @@ public class CourseContentEntity {
     private String careerOpportunities;
     @Column(name = "active_flag", nullable = false)
     private boolean active_flag = true;
+    @Lob
+    @Column(name = "logo_url")
+    private String logoUrl;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -46,6 +49,14 @@ public class CourseContentEntity {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
 
     public Long getId() {
         return id;

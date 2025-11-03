@@ -4,13 +4,25 @@ import com.example.cse_backend.Entity.CourseEntity;
 
 public class CourseContentDto {
     private Long id;
-    private CourseEntity courseId;
+    private Long courseId;
     private String courseTitle;
     private String whatYouWillLearn;
     private String whoCanJoin;
     private String skillsYouWillGain;
     private String courseTopics;
     private String careerOpportunities;
+    private String logoUrl;
+    private CourseEntity course;
+
+    public CourseEntity getCourse() { return course; }
+    public void setCourse(CourseEntity course) { this.course = course; }
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
 
     public Long getId() {
         return id;
@@ -20,11 +32,11 @@ public class CourseContentDto {
         this.id = id;
     }
 
-    public CourseEntity getCourseId() {
+    public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(CourseEntity courseId) {
+    public void setCourseId(Long courseId) {
         this.courseId = courseId;
     }
 
@@ -79,7 +91,7 @@ public class CourseContentDto {
     public CourseContentDto() {
     }
 
-    public CourseContentDto(CourseEntity courseId, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities) {
+    public CourseContentDto(Long courseId, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;
         this.whatYouWillLearn = whatYouWillLearn;

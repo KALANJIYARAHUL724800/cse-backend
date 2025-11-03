@@ -37,4 +37,37 @@
             @UpdateTimestamp
             @Column(name = "updated_at")
             private LocalDateTime updatedAt;
+
+            public CourseEntity getCourse() {
+                return course;
+            }
+
+            public void setCourse(CourseEntity course) {
+                this.course = course;
+            }
+
+            public String getCourseContent() {
+                return courseContent;
+            }
+
+            public void setCourseContent(String courseContent) {
+                this.courseContent = courseContent;
+            }
+
+            public boolean isActive_flag() {
+                return active_flag;
+            }
+
+            public void setActive_flag(boolean active_flag) {
+                this.active_flag = active_flag;
+            }
+
+            public CourseDetailsEntity(CourseEntity course, String courseContent, boolean active_flag) {
+                this.course = course;
+                this.courseContent = courseContent;
+                this.active_flag = active_flag;
+            }
+
+            public CourseDetailsEntity() {
+            }
         }

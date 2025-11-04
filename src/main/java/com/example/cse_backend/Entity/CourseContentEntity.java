@@ -17,8 +17,8 @@ public class CourseContentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id", nullable = false, foreignKey = @ForeignKey(name = "fk_course_content_course"))
-    private CourseEntity courseId;
+    @JoinColumn(name = "course_id", nullable = false)
+    private CourseEntity course;
     @Lob
     @Column(name = "course_title")
     private String courseTitle;
@@ -50,13 +50,6 @@ public class CourseContentEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
-    }
 
     public Long getId() {
         return id;
@@ -66,12 +59,12 @@ public class CourseContentEntity {
         this.id = id;
     }
 
-    public CourseEntity getCourseId() {
-        return courseId;
+    public CourseEntity getCourse() {
+        return course;
     }
 
-    public void setCourseId(CourseEntity courseId) {
-        this.courseId = courseId;
+    public void setCourse(CourseEntity course) {
+        this.course = course;
     }
 
     public String getCourseTitle() {
@@ -130,8 +123,16 @@ public class CourseContentEntity {
         this.active_flag = active_flag;
     }
 
-    public CourseContentEntity(CourseEntity courseId, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities, boolean active_flag) {
-        this.courseId = courseId;
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public CourseContentEntity(CourseEntity course, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities, boolean active_flag, String logoUrl) {
+        this.course = course;
         this.courseTitle = courseTitle;
         this.whatYouWillLearn = whatYouWillLearn;
         this.whoCanJoin = whoCanJoin;
@@ -139,6 +140,7 @@ public class CourseContentEntity {
         this.courseTopics = courseTopics;
         this.careerOpportunities = careerOpportunities;
         this.active_flag = active_flag;
+        this.logoUrl = logoUrl;
     }
 
     public CourseContentEntity() {

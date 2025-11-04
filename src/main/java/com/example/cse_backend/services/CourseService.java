@@ -41,4 +41,8 @@ public class CourseService {
     public List<CourseEntity> searchCourseLike(String value) {
         return courseRepository.searchByName(value);
     }
+
+    public CourseEntity getCourseWithMaxId() {
+        return courseRepository.findCourseWithMaxId();
+    }
 }

@@ -23,7 +23,7 @@ public class CourseEntity {
     private String courseName;
 
     @Lob
-    @Column(name = "course_content",nullable = false)
+    @Column(name = "course_content", columnDefinition = "TEXT")
     private String courseContent;
 
     @Lob

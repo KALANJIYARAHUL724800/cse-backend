@@ -22,7 +22,7 @@ public class CourseContentService {
                 .orElseThrow(() -> new RuntimeException("Course not found with ID: " + data.getCourseId()));
 
         CourseContentEntity content = new CourseContentEntity();
-        content.setCourseId(course);
+        content.setCourse(course);
         content.setLogoUrl(data.getLogoUrl());
         content.setCourseTitle(data.getCourseTitle());
         content.setCourseTopics(data.getCourseTopics());
@@ -45,12 +45,11 @@ public class CourseContentService {
         dto.setSkillsYouWillGain(entity.getSkillsYouWillGain());
         dto.setCourseTopics(entity.getCourseTopics());
         dto.setCareerOpportunities(entity.getCareerOpportunities());
-        dto.setCourse(entity.getCourseId());
+        dto.setCourse(entity.getCourse());
         return dto;
     }
     public List<CourseContentEntity> searchCourseContent(Long courseId) {
-        return courseContentRepository.findByCourseEntityId(courseId);
+        return courseContentRepository.findByCourse_Id(courseId);
     }
-
 
 }

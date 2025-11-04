@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api")
+@RequestMapping("/api")
 public class CourseController {
     @Autowired
     private CourseService courseService;
@@ -67,5 +67,14 @@ public class CourseController {
                     .body("No courses found for: " + value);
         }
         return ResponseEntity.ok(courses);
+    }
+    @GetMapping("/latest-course")
+    public ResponseEntity<CourseEntity> getLatestCourse() {
+        CourseEntity course = courseService.getCourseWithMaxId();
+        if (course != null) {
+            return ResponseEntity.ok(course);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

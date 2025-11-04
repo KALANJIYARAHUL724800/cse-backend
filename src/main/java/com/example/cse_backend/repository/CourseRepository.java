@@ -9,4 +9,6 @@ public interface CourseRepository extends JpaRepository<CourseEntity,Long> {
     @Query("SELECT c FROM CourseEntity c WHERE c.courseName LIKE %:value%")
     List<CourseEntity> searchByName(@Param("value") String value);
 
+    @Query("SELECT c FROM CourseEntity c WHERE c.id = (SELECT MAX(c2.id) FROM CourseEntity c2)")
+    CourseEntity findCourseWithMaxId();
 }

@@ -14,16 +14,6 @@ public class CourseContentDto {
     private String logoUrl;
     private CourseEntity course;
 
-    public CourseEntity getCourse() { return course; }
-    public void setCourse(CourseEntity course) { this.course = course; }
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
-    }
-
     public Long getId() {
         return id;
     }
@@ -88,10 +78,23 @@ public class CourseContentDto {
         this.careerOpportunities = careerOpportunities;
     }
 
-    public CourseContentDto() {
+    public String getLogoUrl() {
+        return logoUrl;
     }
 
-    public CourseContentDto(Long courseId, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities) {
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public CourseEntity getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseEntity course) {
+        this.course = course;
+    }
+
+    public CourseContentDto(Long courseId, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities, String logoUrl, CourseEntity course) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;
         this.whatYouWillLearn = whatYouWillLearn;
@@ -99,5 +102,10 @@ public class CourseContentDto {
         this.skillsYouWillGain = skillsYouWillGain;
         this.courseTopics = courseTopics;
         this.careerOpportunities = careerOpportunities;
+        this.logoUrl = logoUrl;
+        this.course = course;
+    }
+
+    public CourseContentDto() {
     }
 }

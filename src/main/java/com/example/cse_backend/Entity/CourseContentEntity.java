@@ -13,34 +13,44 @@ import java.time.LocalDateTime;
         }
 )
 public class CourseContentEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
+
     @Lob
-    @Column(name = "course_title")
+    @Column(name = "course_title", columnDefinition = "LONGTEXT")
     private String courseTitle;
+
     @Lob
-    @Column(name = "what_you_will_learn")
+    @Column(name = "what_you_will_learn", columnDefinition = "LONGTEXT")
     private String whatYouWillLearn;
+
     @Lob
-    @Column(name = "who_can_join")
+    @Column(name = "who_can_join", columnDefinition = "LONGTEXT")
     private String whoCanJoin;
+
     @Lob
-    @Column(name = "skills_you_will_gain")
+    @Column(name = "skills_you_will_gain", columnDefinition = "LONGTEXT")
     private String skillsYouWillGain;
+
     @Lob
-    @Column(name = "course_topics")
+    @Column(name = "course_topics", columnDefinition = "LONGTEXT")
     private String courseTopics;
+
     @Lob
-    @Column(name = "career_opportunities")
+    @Column(name = "career_opportunities", columnDefinition = "LONGTEXT")
     private String careerOpportunities;
+
     @Column(name = "active_flag", nullable = false)
     private boolean active_flag = true;
+
     @Lob
-    @Column(name = "logo_url")
+    @Column(name = "logo_url", columnDefinition = "LONGTEXT")
     private String logoUrl;
 
     @Column(name = "created_at", updatable = false)
@@ -50,13 +60,7 @@ public class CourseContentEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
-    }
+    // --- Getters & Setters ---
 
     public Long getId() {
         return id;
@@ -66,12 +70,12 @@ public class CourseContentEntity {
         this.id = id;
     }
 
-    public CourseEntity getCourseId() {
+    public CourseEntity getCourse() {
         return course;
     }
 
-    public void setCourseId(CourseEntity courseId) {
-        this.course = courseId;
+    public void setCourse(CourseEntity course) {
+        this.course = course;
     }
 
     public String getCourseTitle() {
@@ -130,8 +134,21 @@ public class CourseContentEntity {
         this.active_flag = active_flag;
     }
 
-    public CourseContentEntity(CourseEntity courseId, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities, boolean active_flag) {
-        this.course = courseId;
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    // --- Constructors ---
+    public CourseContentEntity() {}
+
+    public CourseContentEntity(CourseEntity course, String courseTitle, String whatYouWillLearn,
+                               String whoCanJoin, String skillsYouWillGain, String courseTopics,
+                               String careerOpportunities, boolean active_flag) {
+        this.course = course;
         this.courseTitle = courseTitle;
         this.whatYouWillLearn = whatYouWillLearn;
         this.whoCanJoin = whoCanJoin;
@@ -139,8 +156,5 @@ public class CourseContentEntity {
         this.courseTopics = courseTopics;
         this.careerOpportunities = careerOpportunities;
         this.active_flag = active_flag;
-    }
-
-    public CourseContentEntity() {
     }
 }

@@ -2,6 +2,7 @@ package com.example.cse_backend.controller;
 
 import com.example.cse_backend.Dto.CourseContentDto;
 import com.example.cse_backend.Entity.CourseContentEntity;
+import com.example.cse_backend.Entity.CourseEntity;
 import com.example.cse_backend.services.CourseContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,15 @@ public class CourseContentController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findCourseContent(@PathVariable Long id) {
-        return new ResponseEntity<>(courseContentService.findCourseContent(id), HttpStatus.OK);
+        try {
+            CourseContentDto dto = courseContentService.findCourseContent(id);
+            return ResponseEntity.ok(dto);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }
     }
+
     @GetMapping("/search/{id}")
     public ResponseEntity<?> getCourseContent(@PathVariable Long id) {
         try {
@@ -34,5 +42,14 @@ public class CourseContentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @GetMapping("/latest-course")
+    public ResponseEntity<?> getLatestCourse() {
+        CourseEntity latest = courseContentService.getLatestCourse();
+        if (latest == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No courses found.");
+        }
+        return ResponseEntity.ok(latest);
+    }
+
 
 }

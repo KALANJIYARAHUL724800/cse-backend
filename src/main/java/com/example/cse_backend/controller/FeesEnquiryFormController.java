@@ -1,0 +1,47 @@
+package com.example.cse_backend.controller;
+
+import com.example.cse_backend.Dto.FeesEnquiryFormDto;
+import com.example.cse_backend.Entity.FeesEnquiryFormEntity;
+import com.example.cse_backend.services.FeesEnquiryFormService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@CrossOrigin("*")
+@RestController
+@RequestMapping("/api/enquiry")
+public class FeesEnquiryFormController {
+    @Autowired
+    private FeesEnquiryFormService feesEnquiryFormService;
+
+    @PostMapping("/insert")
+    public ResponseEntity<?> insertFeesFormEnquiry(@Valid @RequestBody FeesEnquiryFormDto data, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getAllErrors().forEach(error ->
+                    errors.append(error.getDefaultMessage()).append("; "));
+            return ResponseEntity.badRequest().body(errors.toString());
+        }
+        FeesEnquiryFormEntity saved = feesEnquiryFormService.insertFeesEnquiry(data);
+        return ResponseEntity.ok(saved);  // return saved entity
+    }
+
+    @GetMapping("/show")
+    public ResponseEntity<?> showAllEnquiry()
+    {
+        return new ResponseEntity<>(feesEnquiryFormService.showAllEnquiry(),HttpStatus.OK);
+    }
+    @GetMapping("/between-dates")
+    public List<FeesEnquiryFormEntity> getEnquiriesBetweenDates(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return feesEnquiryFormService.getEnquiriesBetweenDates(startDate, endDate);
+    }
+}

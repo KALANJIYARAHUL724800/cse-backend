@@ -49,7 +49,7 @@ public class CourseContentService {
         return dto;
     }
     public List<CourseContentEntity> searchCourseContent(Long courseId) {
-        return courseContentRepository.findByCourseEntityId(courseId);
+        return courseContentRepository.findByCourse_Id(courseId);
     }
 
 

@@ -17,8 +17,8 @@ public class CourseContentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id", nullable = false, foreignKey = @ForeignKey(name = "fk_course_content_course"))
-    private CourseEntity courseId;
+    @JoinColumn(name = "course_id")
+    private CourseEntity course;
     @Lob
     @Column(name = "course_title")
     private String courseTitle;
@@ -67,11 +67,11 @@ public class CourseContentEntity {
     }
 
     public CourseEntity getCourseId() {
-        return courseId;
+        return course;
     }
 
     public void setCourseId(CourseEntity courseId) {
-        this.courseId = courseId;
+        this.course = courseId;
     }
 
     public String getCourseTitle() {
@@ -131,7 +131,7 @@ public class CourseContentEntity {
     }
 
     public CourseContentEntity(CourseEntity courseId, String courseTitle, String whatYouWillLearn, String whoCanJoin, String skillsYouWillGain, String courseTopics, String careerOpportunities, boolean active_flag) {
-        this.courseId = courseId;
+        this.course = courseId;
         this.courseTitle = courseTitle;
         this.whatYouWillLearn = whatYouWillLearn;
         this.whoCanJoin = whoCanJoin;

@@ -125,7 +125,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("error");
         }
     }
-    @PostMapping("/change-password")
+    @PutMapping("/change-password")
     public ResponseEntity<?> updatePassword(@Valid @RequestBody ChangePasswordDto data, BindingResult result) {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();

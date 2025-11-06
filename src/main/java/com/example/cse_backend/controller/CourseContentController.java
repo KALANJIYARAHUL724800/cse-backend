@@ -4,11 +4,17 @@ import com.example.cse_backend.Dto.CourseContentDto;
 import com.example.cse_backend.Entity.CourseContentEntity;
 import com.example.cse_backend.Entity.CourseEntity;
 import com.example.cse_backend.services.CourseContentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/course-content")
@@ -18,9 +24,18 @@ public class CourseContentController {
     private CourseContentService courseContentService;
 
     @PostMapping("/insert")
-    public ResponseEntity<?> insertContent(@RequestBody CourseContentDto data) {
+    public ResponseEntity<?> insertContent(@Valid @RequestBody CourseContentDto data, BindingResult result) {
+        if (result.hasErrors()) {
+            // Create a map of field name -> error message
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error -> {
+                errors.put(error.getField(), error.getDefaultMessage());
+            });
+            return ResponseEntity.badRequest().body(errors);
+        }
         return new ResponseEntity<>(courseContentService.insertContent(data), HttpStatus.OK);
     }
+
 
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findCourseContent(@PathVariable Long id) {

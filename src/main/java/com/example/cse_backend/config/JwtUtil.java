@@ -16,7 +16,7 @@ public class JwtUtil {
             "MyUltraStrongSecretKeyForJWTAuth123456".getBytes()
     );
 
-    private static final long EXPIRATION = 1000L * 60 * 60; // 1 hour
+    private static final long EXPIRATION = 1000L * 60 * 10; // 10 minute
 
     // Generate JWT
     public String generateToken(String email) {

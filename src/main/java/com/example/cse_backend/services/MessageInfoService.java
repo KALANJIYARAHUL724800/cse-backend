@@ -15,6 +15,9 @@ public class MessageInfoService {
     @Value("${spring.mail.username}")
     private String owner;
 
+    @Value("${app.reset-link}")
+    private String resetLink;
+
     private final JavaMailSender mailSender;
 
     public MessageInfoService(JavaMailSender mailSender) {
@@ -29,8 +32,7 @@ public class MessageInfoService {
         simpleMailMessage.setTo(message.getEmail());
         simpleMailMessage.setFrom(owner);
         simpleMailMessage.setSubject("Forgot Password from CSE " + currentDateTime);
-        //String resetLink = ServletUriComponentsBuilder.fromCurrentRequest().toUriString()+"/update-password";
-        String resetLink = "http://localhost:5173/update-password";
+        //String resetLink = ServletUriComponentsBuilder.fromCurrentRequest().toUriString()+"/update-password"
         simpleMailMessage.setText(
                 "Dear User,\n\n" +
                         "We received a request to reset your password for your CSE Portal account.\n\n" +

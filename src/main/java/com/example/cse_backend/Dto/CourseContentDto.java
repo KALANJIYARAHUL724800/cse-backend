@@ -1,16 +1,24 @@
 package com.example.cse_backend.Dto;
 
 import com.example.cse_backend.Entity.CourseEntity;
+import jakarta.validation.constraints.NotBlank;
 
 public class CourseContentDto {
     private Long id;
     private Long courseId;
+    @NotBlank(message = "course title is required")
     private String courseTitle;
+    @NotBlank(message = "whatYouWillLearn is required")
     private String whatYouWillLearn;
+    @NotBlank(message = "whoCanJoin is required")
     private String whoCanJoin;
+    @NotBlank(message = "skillsYouWillGain is required")
     private String skillsYouWillGain;
+    @NotBlank(message = "courseTopics is required")
     private String courseTopics;
+    @NotBlank(message = "careerOpportunities is required")
     private String careerOpportunities;
+    @NotBlank(message = "logoUrl is required")
     private String logoUrl;
     private CourseEntity course;
 

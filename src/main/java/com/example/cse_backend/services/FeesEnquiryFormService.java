@@ -33,4 +33,7 @@ public class FeesEnquiryFormService {
     public List<FeesEnquiryFormEntity> getEnquiriesBetweenDates(LocalDate startDate, LocalDate endDate) {
         return feesEnquiryFormRepository.findByCurrentDateBetween(startDate, endDate);
     }
+    public Long getEnquiryCount(String startDate, String endDate) {
+        return feesEnquiryFormRepository.countEnquiriesBetweenDates(startDate, endDate);
+    }
 }

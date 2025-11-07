@@ -44,4 +44,11 @@ public class FeesEnquiryFormController {
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return feesEnquiryFormService.getEnquiriesBetweenDates(startDate, endDate);
     }
+    @GetMapping("/count")
+    public Long getEnquiryCount(
+            @RequestParam String startDate,
+            @RequestParam String endDate) {
+
+        return feesEnquiryFormService.getEnquiryCount(startDate, endDate);
+    }
 }

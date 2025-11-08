@@ -11,8 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @CrossOrigin("*")
 @RestController
@@ -51,4 +56,46 @@ public class FeesEnquiryFormController {
 
         return feesEnquiryFormService.getEnquiryCount(startDate, endDate);
     }
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportEnquiriesExcel() throws Exception {
+        ByteArrayInputStream in = feesEnquiryFormService.exportEnquiriesToExcel();
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        String formattedDateTime = now.format(formatter);
+
+        String fileName = "enquiries_" + formattedDateTime + ".xlsx";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=" + fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(in.readAllBytes());
+    }
+    @GetMapping("/export-between-dates")
+    public ResponseEntity<byte[]> exportEnquiriesExcelBetweenDates(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) throws Exception {
+
+        ByteArrayInputStream in = feesEnquiryFormService.exportEnquiriesToExcelBetweenDates(startDate, endDate);
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        String formattedDateTime = now.format(formatter);
+        String fileName = "enquiries_" + formattedDateTime + ".xlsx";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=" + fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(in.readAllBytes());
+    }
+
 }

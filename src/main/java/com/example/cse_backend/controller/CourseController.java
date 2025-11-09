@@ -19,7 +19,7 @@ public class CourseController {
     private CourseService courseService;
     @GetMapping("/all-courses")
     public List<CourseEntity> getAllCourses() {
-        return courseService.getAllCourses();  // this fetches all records
+        return courseService.getAllCourses();
     }
     @GetMapping("/find/{id}")
     public ResponseEntity<CourseEntity> findCourse(@PathVariable Long id) {

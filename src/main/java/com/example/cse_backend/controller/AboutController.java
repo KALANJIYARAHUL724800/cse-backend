@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/about")
 public class AboutController {
     @Autowired
     private AboutService aboutService;
-    @GetMapping("/about-content")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllContent()
     {
         return new ResponseEntity<>(aboutService.allContent(), HttpStatus.OK);

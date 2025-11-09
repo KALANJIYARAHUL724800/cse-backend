@@ -18,14 +18,11 @@ public class CourseContentService {
 
     @Autowired
     private CourseRepository courseRepository;
-
-    // --- Insert content ---
     public CourseContentEntity insertContent(CourseContentDto data) {
         CourseEntity course = courseRepository.findById(data.getCourseId())
                 .orElseThrow(() -> new RuntimeException("Course not found with ID: " + data.getCourseId()));
-
         CourseContentEntity content = new CourseContentEntity();
-        content.setCourse(course); // use setCourse
+        content.setCourse(course);
         content.setLogoUrl(data.getLogoUrl());
         content.setCourseTitle(data.getCourseTitle());
         content.setCourseTopics(data.getCourseTopics());
@@ -33,11 +30,8 @@ public class CourseContentService {
         content.setSkillsYouWillGain(data.getSkillsYouWillGain());
         content.setWhatYouWillLearn(data.getWhatYouWillLearn());
         content.setWhoCanJoin(data.getWhoCanJoin());
-
         return courseContentRepository.save(content);
     }
-
-    // --- Find by content ID ---
     public CourseContentDto findCourseContent(Long id) {
         return courseContentRepository.findById(id)
                 .map(entity -> {
@@ -53,16 +47,28 @@ public class CourseContentService {
                     dto.setLogoUrl(entity.getLogoUrl());
                     return dto;
                 })
-                .orElse(null); // or return Optional<CourseContentDto>
+                .orElse(null);
     }
-
-    // --- Search by course ID ---
     public List<CourseContentEntity> searchCourseContent(Long courseId) {
         return courseContentRepository.findByCourse_Id(courseId);
     }
-
-    // --- Get latest course ---
     public CourseEntity getLatestCourse() {
         return courseRepository.findLatestCourse();
     }
+    public CourseContentEntity updateContent(Long id, CourseContentDto data) {
+        CourseContentEntity existingContent = courseContentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Content not found with ID: " + id));
+        CourseEntity course = courseRepository.findById(data.getCourseId())
+                .orElseThrow(() -> new RuntimeException("Course not found with ID: " + data.getCourseId()));
+        existingContent.setCourse(course);
+        existingContent.setLogoUrl(data.getLogoUrl());
+        existingContent.setCourseTitle(data.getCourseTitle());
+        existingContent.setCourseTopics(data.getCourseTopics());
+        existingContent.setCareerOpportunities(data.getCareerOpportunities());
+        existingContent.setSkillsYouWillGain(data.getSkillsYouWillGain());
+        existingContent.setWhatYouWillLearn(data.getWhatYouWillLearn());
+        existingContent.setWhoCanJoin(data.getWhoCanJoin());
+        return courseContentRepository.save(existingContent);
+    }
+
 }

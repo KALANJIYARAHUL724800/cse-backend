@@ -27,12 +27,10 @@ public class MessageInfoService {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss a");
         String currentDateTime = now.format(formatter);
-
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(message.getEmail());
         simpleMailMessage.setFrom(owner);
         simpleMailMessage.setSubject("Forgot Password from CSE " + currentDateTime);
-        //String resetLink = ServletUriComponentsBuilder.fromCurrentRequest().toUriString()+"/update-password"
         simpleMailMessage.setText(
                 "Dear User,\n\n" +
                         "We received a request to reset your password for your CSE Portal account.\n\n" +
@@ -42,7 +40,6 @@ public class MessageInfoService {
                         "Thank you,\n" +
                         "CSE Portal Support Team"
         );
-
         try {
             mailSender.send(simpleMailMessage);
             System.out.println("✅ Email sent successfully to " + message.getEmail());

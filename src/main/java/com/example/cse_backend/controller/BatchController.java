@@ -23,31 +23,25 @@ public class BatchController {
     @PostMapping("/insert")
     public ResponseEntity<?> saveBatch(@Valid @RequestBody BatchDto batchDto, BindingResult result) {
         if (result.hasErrors()) {
-            // Create a map of field name -> error message
             Map<String, String> errors = new HashMap<>();
             result.getFieldErrors().forEach(error -> {
                 errors.put(error.getField(), error.getDefaultMessage());
             });
-            return ResponseEntity.badRequest().body(errors); // now type is fine
+            return ResponseEntity.badRequest().body(errors);
         }
-
         BatchDto savedBatch = batchService.saveBatch(batchDto);
         return ResponseEntity.ok(savedBatch);
     }
-
-
     @GetMapping
     public ResponseEntity<List<BatchDto>> getAllBatches() {
         List<BatchDto> batches = batchService.getAllBatches();
         return ResponseEntity.ok(batches);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<BatchDto> getBatchById(@PathVariable Long id) {
         BatchDto batch = batchService.getBatchById(id);
         return ResponseEntity.ok(batch);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBatch(@PathVariable Long id) {
         batchService.deleteBatch(id);
@@ -60,7 +54,6 @@ public class BatchController {
             result.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
             return ResponseEntity.badRequest().body(errors);
         }
-
         BatchDto updatedBatch = batchService.updateBatch(id, batchDto);
         return ResponseEntity.ok(updatedBatch);
     }

@@ -11,14 +11,10 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    // Direct static key — fast lookup, no decoding overhead
     private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(
             "MyUltraStrongSecretKeyForJWTAuth123456".getBytes()
     );
-
-    private static final long EXPIRATION = 1000L * 60 * 10; // 10 minute
-
-    // Generate JWT
+    private static final long EXPIRATION = 1000L * 60 * 10;
     public String generateToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
@@ -27,8 +23,6 @@ public class JwtUtil {
                 .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
-
-    // Validate JWT
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -40,8 +34,6 @@ public class JwtUtil {
             return false;
         }
     }
-
-    // Extract Email
     public String extractEmail(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)

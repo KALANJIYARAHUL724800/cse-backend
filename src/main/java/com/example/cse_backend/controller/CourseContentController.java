@@ -26,7 +26,6 @@ public class CourseContentController {
     @PostMapping("/insert")
     public ResponseEntity<?> insertContent(@Valid @RequestBody CourseContentDto data, BindingResult result) {
         if (result.hasErrors()) {
-            // Create a map of field name -> error message
             Map<String, String> errors = new HashMap<>();
             result.getFieldErrors().forEach(error -> {
                 errors.put(error.getField(), error.getDefaultMessage());
@@ -35,8 +34,6 @@ public class CourseContentController {
         }
         return new ResponseEntity<>(courseContentService.insertContent(data), HttpStatus.OK);
     }
-
-
     @GetMapping("/find/{id}")
     public ResponseEntity<?> findCourseContent(@PathVariable Long id) {
         try {
@@ -47,7 +44,6 @@ public class CourseContentController {
                     .body(e.getMessage());
         }
     }
-
     @GetMapping("/search/{id}")
     public ResponseEntity<?> getCourseContent(@PathVariable Long id) {
         try {
@@ -65,6 +61,23 @@ public class CourseContentController {
         }
         return ResponseEntity.ok(latest);
     }
-
-
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateContent(
+            @PathVariable Long id,
+            @Valid @RequestBody CourseContentDto data,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error -> {
+                errors.put(error.getField(), error.getDefaultMessage());
+            });
+            return ResponseEntity.badRequest().body(errors);
+        }
+        try {
+            CourseContentEntity updatedContent = courseContentService.updateContent(id, data);
+            return ResponseEntity.ok(updatedContent);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

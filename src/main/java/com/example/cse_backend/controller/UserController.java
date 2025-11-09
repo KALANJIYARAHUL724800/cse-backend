@@ -63,7 +63,6 @@ public class UserController {
             }
         }
         var loginResponse = userService.userLogin(data);
-
         if (loginResponse.getStatusCode() == HttpStatus.OK) {
             String token = jwtUtil.generateToken(data.getEmail());
             return ResponseEntity.ok(Map.of(
@@ -90,7 +89,6 @@ public class UserController {
             }
         }
         var loginResponse = userService.userLogin(data);
-
         if (loginResponse.getStatusCode() == HttpStatus.OK) {
             String token = jwtUtil.generateToken(data.getEmail());
             return ResponseEntity.ok(Map.of(

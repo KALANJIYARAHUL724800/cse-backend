@@ -37,7 +37,6 @@ public class UserService {
         UserEntity savedUser = loginRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
-
     public ResponseEntity<?> adminRegister(UserDto data)
     {
         if (loginRepository.existsByEmail(data.getEmail())) {
@@ -53,7 +52,6 @@ public class UserService {
         UserEntity savedUser = loginRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
-
     public ResponseEntity<?> userLogin(UserDto data)
     {
         UserEntity user = loginRepository.findByEmail(data.getEmail());
@@ -61,33 +59,23 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("User not found");
         }
-
         if (!passwordEncoder.matches(data.getPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid password");
         }
-
         return ResponseEntity.ok("Login success");
     }
-
     public ResponseEntity<?> updatePassword(ChangePasswordDto data) {
         UserEntity user = loginRepository.findByEmail(data.getEmail());
-
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found!");
         }
-
         if (!data.getPassword().equals(data.getConfirmPassword())) {
             return ResponseEntity.badRequest().body("Passwords do not match!");
         }
-
         user.setPassword(passwordEncoder.encode(data.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(data.getConfirmPassword()));
         loginRepository.save(user);
-
         return ResponseEntity.ok("Password updated successfully!");
     }
-
-
-
 }

@@ -35,9 +35,8 @@ public class FeesEnquiryFormController {
             return ResponseEntity.badRequest().body(errors.toString());
         }
         FeesEnquiryFormEntity saved = feesEnquiryFormService.insertFeesEnquiry(data);
-        return ResponseEntity.ok(saved);  // return saved entity
+        return ResponseEntity.ok(saved);
     }
-
     @GetMapping("/show")
     public ResponseEntity<?> showAllEnquiry()
     {
@@ -59,16 +58,12 @@ public class FeesEnquiryFormController {
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportEnquiriesExcel() throws Exception {
         ByteArrayInputStream in = feesEnquiryFormService.exportEnquiriesToExcel();
-
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
         String formattedDateTime = now.format(formatter);
-
         String fileName = "enquiries_" + formattedDateTime + ".xlsx";
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=" + fileName);
-
         return ResponseEntity
                 .ok()
                 .headers(headers)
@@ -80,22 +75,17 @@ public class FeesEnquiryFormController {
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) throws Exception {
-
         ByteArrayInputStream in = feesEnquiryFormService.exportEnquiriesToExcelBetweenDates(startDate, endDate);
-
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
         String formattedDateTime = now.format(formatter);
         String fileName = "enquiries_" + formattedDateTime + ".xlsx";
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=" + fileName);
-
         return ResponseEntity
                 .ok()
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(in.readAllBytes());
     }
-
 }

@@ -24,12 +24,11 @@ public class FeesEnquiryFormService {
         entity.setCourseName(dto.getCourseTitle());
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
-        entity.setCurrentDate(LocalDate.now());   // set current date
-        entity.setCurrentTime(LocalTime.now());   // set current time
+        entity.setCurrentDate(LocalDate.now());
+        entity.setCurrentTime(LocalTime.now());
         entity.setActive_flag(true);
         return feesEnquiryFormRepository.save(entity);
     }
-
     public List<FeesEnquiryFormEntity> showAllEnquiry()
     {
         return feesEnquiryFormRepository.findAll();
@@ -42,11 +41,8 @@ public class FeesEnquiryFormService {
     }
     public ByteArrayInputStream exportEnquiriesToExcel() throws Exception {
         List<FeesEnquiryFormEntity> enquiries = feesEnquiryFormRepository.findAll();
-
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Enquiries");
-
-        // Header row
         Row header = sheet.createRow(0);
         header.createCell(0).setCellValue("ID");
         header.createCell(1).setCellValue("Name");
@@ -54,8 +50,6 @@ public class FeesEnquiryFormService {
         header.createCell(3).setCellValue("Course Name");
         header.createCell(4).setCellValue("Current Date");
         header.createCell(5).setCellValue("Current Time");
-
-        // Data rows
         int rowIdx = 1;
         for (FeesEnquiryFormEntity e : enquiries) {
             Row row = sheet.createRow(rowIdx++);
@@ -66,20 +60,15 @@ public class FeesEnquiryFormService {
             row.createCell(4).setCellValue(e.getCurrentDate().toString());
             row.createCell(5).setCellValue(e.getCurrentTime().toString());
         }
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         workbook.write(out);
         workbook.close();
-
         return new ByteArrayInputStream(out.toByteArray());
     }
     public ByteArrayInputStream exportEnquiriesToExcelBetweenDates(LocalDate startDate, LocalDate endDate) throws Exception {
         List<FeesEnquiryFormEntity> enquiries = feesEnquiryFormRepository.findByCurrentDateBetween(startDate, endDate);
-
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Enquiries");
-
-        // Header row
         Row header = sheet.createRow(0);
         header.createCell(0).setCellValue("ID");
         header.createCell(1).setCellValue("Name");
@@ -87,8 +76,6 @@ public class FeesEnquiryFormService {
         header.createCell(3).setCellValue("Course Name");
         header.createCell(4).setCellValue("Current Date");
         header.createCell(5).setCellValue("Current Time");
-
-        // Data rows
         int rowIdx = 1;
         for (FeesEnquiryFormEntity e : enquiries) {
             Row row = sheet.createRow(rowIdx++);
@@ -99,11 +86,9 @@ public class FeesEnquiryFormService {
             row.createCell(4).setCellValue(e.getCurrentDate().toString());
             row.createCell(5).setCellValue(e.getCurrentTime().toString());
         }
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         workbook.write(out);
         workbook.close();
-
         return new ByteArrayInputStream(out.toByteArray());
     }
 

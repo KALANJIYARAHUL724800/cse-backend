@@ -19,25 +19,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())          // Disable CSRF
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()          // Allow all requests
+                        .anyRequest().permitAll()
                 )
-                .formLogin(login -> login.disable())   // Disable form login
-                .httpBasic(basic -> basic.disable());  // Disable basic auth
+                .formLogin(login -> login.disable())
+                .httpBasic(basic -> basic.disable());
         return http.build();
     }
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));  // Frontend origin
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);  // Apply to your API paths
-
+        source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
 }

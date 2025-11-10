@@ -52,13 +52,19 @@ public class UserController {
     public ResponseEntity<?> loginUser(@Valid @RequestBody UserDto data, BindingResult result) {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
+
+            // Check each field individually
             result.getFieldErrors().forEach(error -> {
                 String field = error.getField();
-                if (field.equals("email") && field.equals("password")) {
+                // Append each error message separately
+                if ("email".equals(field)) {
+                    errors.append(error.getDefaultMessage()).append("; ");
+                } else if ("password".equals(field)) {
                     errors.append(error.getDefaultMessage()).append("; ");
                 }
             });
-            if (!errors.isEmpty()) {
+
+            if (errors.length() > 0) {
                 return ResponseEntity.badRequest().body(errors.toString());
             }
         }
@@ -78,16 +84,24 @@ public class UserController {
     public ResponseEntity<?> loginAdmin(@Valid @RequestBody UserDto data, BindingResult result) {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
+
+            // Check each field individually
             result.getFieldErrors().forEach(error -> {
                 String field = error.getField();
-                if (field.equals("email") && field.equals("password")) {
+                // Append each error message separately
+                if ("email".equals(field)) {
+                    errors.append(error.getDefaultMessage()).append("; ");
+                } else if ("password".equals(field)) {
                     errors.append(error.getDefaultMessage()).append("; ");
                 }
             });
-            if (!errors.isEmpty()) {
+
+            if (errors.length() > 0) {
                 return ResponseEntity.badRequest().body(errors.toString());
             }
         }
+
+        // Proceed with login if no validation errors
         var loginResponse = userService.userLogin(data);
         if (loginResponse.getStatusCode() == HttpStatus.OK) {
             String token = jwtUtil.generateToken(data.getEmail());
@@ -100,6 +114,7 @@ public class UserController {
             return loginResponse;
         }
     }
+
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@Valid @RequestBody MessageInfoDto data,BindingResult result) {
         if (result.hasErrors()) {
@@ -140,5 +155,27 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found!");
         }
         return userService.updatePassword(data);
+    }
+    @GetMapping("/countAdmin")
+    public ResponseEntity<?> countActiveUsers() {
+        Long count = userService.countAdmin();
+
+        if (count == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No active users found");
+        }
+
+        return ResponseEntity.ok(count);
+    }
+    @GetMapping("/countStudents")
+    public ResponseEntity<?> countStudents() {
+        Long count = userService.countStudents();
+
+        if (count == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No active users found");
+        }
+
+        return ResponseEntity.ok(count);
     }
 }

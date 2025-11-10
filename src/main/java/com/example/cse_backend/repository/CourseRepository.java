@@ -10,4 +10,7 @@ public interface CourseRepository extends JpaRepository<CourseEntity,Long> {
     List<CourseEntity> searchByName(@Param("value") String value);
     @Query("SELECT c FROM CourseEntity c WHERE c.id = (SELECT MAX(c2.id) FROM CourseEntity c2)")
     CourseEntity findLatestCourse();
+    @Query("SELECT COUNT(c.id) FROM CourseEntity c")
+    Long countCourses();
+
 }

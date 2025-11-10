@@ -68,4 +68,15 @@ public class CourseController {
         }
         return ResponseEntity.ok(courses);
     }
+    @GetMapping("/countcourse")
+    public ResponseEntity<?> countCourses() {
+        Long count = courseService.countCourse();
+
+        if (count == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No courses found");
+        }
+
+        return ResponseEntity.ok(count);
+    }
 }

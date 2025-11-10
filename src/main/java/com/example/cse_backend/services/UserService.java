@@ -78,4 +78,11 @@ public class UserService {
         loginRepository.save(user);
         return ResponseEntity.ok("Password updated successfully!");
     }
+    public Long countAdmin() {
+        return loginRepository.countAdminStaff();
+    }
+    public Long countStudents() {
+        return loginRepository.countStudents();
+    }
+
 }

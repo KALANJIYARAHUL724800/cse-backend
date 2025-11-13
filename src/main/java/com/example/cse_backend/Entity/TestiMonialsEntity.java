@@ -36,15 +36,26 @@ public class TestiMonialsEntity {
     @Column(name = "image",columnDefinition = "LONGBLOB")
     private byte[] image;
 
+    @Column(name = "place",nullable = false)
+    private String place;
+
     @Column(name = "active_flag",nullable = false)
     private boolean active_flag = true;
 
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
     public Long getId() {
         return id;
@@ -107,6 +118,27 @@ public class TestiMonialsEntity {
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public TestiMonialsEntity(Long id, String name, String courseName, String text, byte[] image, String place) {
+        this.id = id;
+        this.name = name;
+        this.courseName = courseName;
+        this.text = text;
+        this.image = image;
+        this.place = place;
+    }
+
+    public TestiMonialsEntity(Long id, String name, String courseName, String text, byte[] image, String place, boolean active_flag, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.courseName = courseName;
+        this.text = text;
+        this.image = image;
+        this.place = place;
+        this.active_flag = active_flag;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 

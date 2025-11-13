@@ -22,6 +22,7 @@ private TestiMonialsRepository testiMonialsRepository;
         entity.setCourseName(dto.getCourseName());
         entity.setText(dto.getText());
         entity.setPlace(dto.getPlace());
+        entity.setImageUrl(dto.getImageUrl());
         if (fileBytes != null && fileBytes.length > 0) {
             entity.setImage(fileBytes);
         } else {
@@ -41,7 +42,7 @@ private TestiMonialsRepository testiMonialsRepository;
         obj.setCourseName(data.getCourseName());
         obj.setText(data.getText());
         obj.setPlace(data.getPlace());
-
+        obj.setImageUrl(data.getImageUrl());
         if (image != null && !image.isEmpty()) {
             obj.setImage(image.getBytes());
         }
@@ -49,7 +50,6 @@ private TestiMonialsRepository testiMonialsRepository;
 
         return testiMonialsRepository.save(obj);
     }
-
 
     public TestiMonialsEntity find(Long id) {
         return testiMonialsRepository.findById(id)

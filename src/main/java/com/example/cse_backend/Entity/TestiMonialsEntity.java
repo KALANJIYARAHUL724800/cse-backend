@@ -42,12 +42,37 @@ public class TestiMonialsEntity {
     @Column(name = "active_flag",nullable = false)
     private boolean active_flag = true;
 
+    @Lob
+    @Column(name = "image_url",nullable = false)
+    private String imageUrl;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public TestiMonialsEntity(Long id, String name, String courseName, String text, byte[] image, String place, boolean active_flag, String imageUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.courseName = courseName;
+        this.text = text;
+        this.image = image;
+        this.place = place;
+        this.active_flag = active_flag;
+        this.imageUrl = imageUrl;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 
     public String getPlace() {
         return place;

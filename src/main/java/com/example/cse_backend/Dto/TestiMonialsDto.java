@@ -16,6 +16,7 @@ public class TestiMonialsDto {
     @NotBlank(message = "place is required")
     private String place;
 
+    private String imageUrl;
     // Getters and Setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -29,12 +30,21 @@ public class TestiMonialsDto {
     public String getPlace() { return place; }
     public void setPlace(String place) { this.place = place; }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public TestiMonialsDto() {}
 
-    public TestiMonialsDto(String name, String courseName, String text, String place) {
+    public TestiMonialsDto(String name, String courseName, String text, String place,String imageUrl) {
         this.name = name;
         this.courseName = courseName;
         this.text = text;
         this.place = place;
+        this.imageUrl = imageUrl;
     }
 }

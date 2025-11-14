@@ -33,7 +33,7 @@ public class BatchEntity {
 
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;

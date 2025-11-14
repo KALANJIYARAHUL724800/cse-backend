@@ -19,6 +19,7 @@ private TestiMonialsRepository testiMonialsRepository;
     public TestiMonialsEntity insert(TestiMonialsDto dto, byte[] fileBytes) {
         TestiMonialsEntity entity = new TestiMonialsEntity();
         entity.setName(dto.getName());
+        entity.setEnrollno(dto.getEnrollno());
         entity.setCourseName(dto.getCourseName());
         entity.setText(dto.getText());
         entity.setPlace(dto.getPlace());
@@ -39,6 +40,7 @@ private TestiMonialsRepository testiMonialsRepository;
                 .orElseThrow(() -> new RuntimeException("Testimonial not found"));
 
         obj.setName(data.getName());
+        obj.setEnrollno(data.getEnrollno());
         obj.setCourseName(data.getCourseName());
         obj.setText(data.getText());
         obj.setPlace(data.getPlace());

@@ -43,7 +43,7 @@ public class FeesEnquiryFormEntity {
     private LocalTime currentTime;
 
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
     @Column(name = "updated_at")

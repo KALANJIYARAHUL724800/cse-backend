@@ -1,11 +1,15 @@
 package com.example.cse_backend.Dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class TestiMonialsDto {
 
     @NotBlank(message = "name is required")
     private String name;
+
+    @NotNull(message = "Enroll no is required")
+    private Long enrollno;
 
     @NotBlank(message = "course name is required")
     private String courseName;
@@ -18,6 +22,16 @@ public class TestiMonialsDto {
 
     private String imageUrl;
     // Getters and Setters
+
+
+    public Long getEnrollno() {
+        return enrollno;
+    }
+
+    public void setEnrollno(Long enrollno) {
+        this.enrollno = enrollno;
+    }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -40,11 +54,12 @@ public class TestiMonialsDto {
 
     public TestiMonialsDto() {}
 
-    public TestiMonialsDto(String name, String courseName, String text, String place,String imageUrl) {
+    public TestiMonialsDto(String name, String courseName, String text, String place,String imageUrl,Long enrollno) {
         this.name = name;
         this.courseName = courseName;
         this.text = text;
         this.place = place;
         this.imageUrl = imageUrl;
+        this.enrollno = enrollno;
     }
 }

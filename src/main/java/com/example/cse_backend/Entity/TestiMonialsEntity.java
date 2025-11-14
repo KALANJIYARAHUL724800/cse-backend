@@ -24,6 +24,9 @@ public class TestiMonialsEntity {
     @Column(name = "name",nullable = false)
     private String name;
 
+    @Column(name = "enroll_no",nullable = false)
+    private Long enrollno;
+
     @Column(name = "course_name",nullable = false)
     private String courseName;
 
@@ -61,9 +64,18 @@ public class TestiMonialsEntity {
         this.imageUrl = imageUrl;
     }
 
-    public TestiMonialsEntity(Long id, String name, String courseName, String text, byte[] image, String place, boolean active_flag, String imageUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Long getEnrollno() {
+        return enrollno;
+    }
+
+    public void setEnrollno(Long enrollno) {
+        this.enrollno = enrollno;
+    }
+
+    public TestiMonialsEntity(Long id, String name,Long enrollno, String courseName, String text, byte[] image, String place, boolean active_flag, String imageUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
+        this.enrollno = enrollno;
         this.courseName = courseName;
         this.text = text;
         this.image = image;

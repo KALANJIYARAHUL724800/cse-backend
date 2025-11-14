@@ -12,5 +12,4 @@ public interface CourseRepository extends JpaRepository<CourseEntity,Long> {
     CourseEntity findLatestCourse();
     @Query("SELECT COUNT(c.id) FROM CourseEntity c")
     Long countCourses();
-
 }

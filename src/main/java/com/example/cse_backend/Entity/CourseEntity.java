@@ -37,7 +37,7 @@ public class CourseEntity {
     private boolean active_flag = true;
 
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();;
 
     @UpdateTimestamp
     @Column(name = "updated_at")

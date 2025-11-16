@@ -170,12 +170,6 @@ public class UserController {
     @GetMapping("/countStudents")
     public ResponseEntity<?> countStudents() {
         Long count = userService.countStudents();
-
-        if (count == 0) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No active users found");
-        }
-
-        return ResponseEntity.ok(count);
+        return ResponseEntity.ok(count); // Always return count
     }
 }

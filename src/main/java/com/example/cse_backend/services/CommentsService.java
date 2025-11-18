@@ -55,4 +55,19 @@ public class CommentsService {
     public List<PostCommentsResponseDto> getCommentsByPostId(Long postId) {
         return commentsRepository.findCommentsByPostId(postId);
     }
+
+    public CommentsEntity updateLikes(Long id,CommentsDto data)
+    {
+        CommentsEntity obj = commentsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
+        obj.setLikes(data.getLikes());
+        return commentsRepository.save(obj);
+    }
+    public CommentsEntity updateComments(Long id,CommentsDto data)
+    {
+        CommentsEntity obj = commentsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
+        obj.setComments(data.getComments());
+        return commentsRepository.save(obj);
+    }
 }

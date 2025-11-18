@@ -82,4 +82,9 @@ public class CommentsController {
         return ResponseEntity.ok(comments);
     }
 
+    @PutMapping("/likes/update/{id}")
+    public ResponseEntity<?> updateLikes(@RequestParam Long id,CommentsDto data)
+    {
+        return new ResponseEntity<>(commentsService.updateLikes(id,data),HttpStatus.OK);
+    }
 }

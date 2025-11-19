@@ -21,7 +21,17 @@ public class FeesEnquiryFormService {
 
     public FeesEnquiryFormEntity insertFeesEnquiry(FeesEnquiryFormDto dto) {
         FeesEnquiryFormEntity entity = new FeesEnquiryFormEntity();
-        entity.setCourseName(dto.getCourseTitle());
+        entity.setCourseName(dto.getCourseTitle() == null ? "" : dto.getCourseTitle());
+        entity.setName(dto.getName());
+        entity.setPhone(dto.getPhone());
+        entity.setCurrentDate(LocalDate.now());
+        entity.setCurrentTime(LocalTime.now());
+        entity.setActive_flag(true);
+        return feesEnquiryFormRepository.save(entity);
+    }
+    public FeesEnquiryFormEntity insertFeesEnquiryTemp(FeesEnquiryFormDto dto) {
+        FeesEnquiryFormEntity entity = new FeesEnquiryFormEntity();
+        entity.setCourseName("No course choose direct enquiry");
         entity.setName(dto.getName());
         entity.setPhone(dto.getPhone());
         entity.setCurrentDate(LocalDate.now());

@@ -37,6 +37,17 @@ public class FeesEnquiryFormController {
         FeesEnquiryFormEntity saved = feesEnquiryFormService.insertFeesEnquiry(data);
         return ResponseEntity.ok(saved);
     }
+    @PostMapping("/insert-enquiry")
+    public ResponseEntity<?> insertFeesFormEnquiryTemp(@Valid @RequestBody FeesEnquiryFormDto data, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getAllErrors().forEach(error ->
+                    errors.append(error.getDefaultMessage()).append("; "));
+            return ResponseEntity.badRequest().body(errors.toString());
+        }
+        FeesEnquiryFormEntity saved = feesEnquiryFormService.insertFeesEnquiryTemp(data);
+        return ResponseEntity.ok(saved);
+    }
     @GetMapping("/show")
     public ResponseEntity<?> showAllEnquiry()
     {

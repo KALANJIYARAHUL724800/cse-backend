@@ -16,4 +16,6 @@ public interface CommentsRepository extends JpaRepository<CommentsEntity,Long> {
             "FROM CommentsEntity c JOIN c.post p " +
             "WHERE p.id = :postId")
     List<PostCommentsResponseDto> findCommentsByPostId(@Param("postId") Long postId);
+    @Query("SELECT SUM(c.likes) FROM CommentsEntity c WHERE c.post.id = :postId")
+    Long getTotalLikesByPostId(@Param("postId") Long postId);
 }

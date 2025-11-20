@@ -70,4 +70,7 @@ public class CommentsService {
         obj.setComments(data.getComments());
         return commentsRepository.save(obj);
     }
+    public Long getTotalLikesByPostId(Long postId) {
+        return commentsRepository.getTotalLikesByPostId(postId);
+    }
 }

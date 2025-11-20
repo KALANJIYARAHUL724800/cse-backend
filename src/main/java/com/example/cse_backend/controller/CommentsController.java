@@ -82,9 +82,16 @@ public class CommentsController {
         return ResponseEntity.ok(comments);
     }
 
-    @PutMapping("/likes/update/{id}")
-    public ResponseEntity<?> updateLikes(@RequestParam Long id,CommentsDto data)
-    {
-        return new ResponseEntity<>(commentsService.updateLikes(id,data),HttpStatus.OK);
+    @PutMapping("/likes/update")
+    public ResponseEntity<?> updateLikes(@RequestParam Long id, @RequestBody CommentsDto data) {
+        return new ResponseEntity<>(commentsService.updateLikes(id, data), HttpStatus.OK);
+    }
+    @GetMapping("/{postId}/likes/total")
+    public ResponseEntity<Long> getTotalLikes(@PathVariable Long postId) {
+        Long totalLikes = commentsService.getTotalLikesByPostId(postId);
+        if (totalLikes == null) {
+            totalLikes = 0L;
+        }
+        return ResponseEntity.ok(totalLikes);
     }
 }

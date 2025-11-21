@@ -36,6 +36,10 @@ public class CourseEntity {
     @Column(name = "active_flag", nullable = false)
     private boolean active_flag = true;
 
+    @Lob
+    @Column(name = "pdf", columnDefinition = "LONGBLOB")
+    private byte[] data;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();;
 
@@ -119,5 +123,13 @@ public class CourseEntity {
     }
 
     public CourseEntity() {
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }

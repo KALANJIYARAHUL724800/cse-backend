@@ -5,6 +5,7 @@ import com.example.cse_backend.Entity.CourseEntity;
 import com.example.cse_backend.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,5 +46,23 @@ public class CourseService {
     public Long countCourse() {
         return courseRepository.countCourses();
     }
+    public String updateCoursePdf(Long id, MultipartFile file) {
+        try {
+            CourseEntity course = courseRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Course Not Found"));
 
+            course.setData(file.getBytes());
+            courseRepository.save(course);
+
+            return "PDF updated successfully!";
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update PDF: " + e.getMessage());
+        }
+    }
+
+    public byte[] getCoursePdf(Long id) {
+        CourseEntity course = courseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course Not Found"));
+        return course.getData();
+    }
 }

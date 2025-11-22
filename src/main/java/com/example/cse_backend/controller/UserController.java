@@ -52,34 +52,31 @@ public class UserController {
     public ResponseEntity<?> loginUser(@Valid @RequestBody UserDto data, BindingResult result) {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
-
-            // Check each field individually
             result.getFieldErrors().forEach(error -> {
                 String field = error.getField();
-                // Append each error message separately
-                if ("email".equals(field)) {
-                    errors.append(error.getDefaultMessage()).append("; ");
-                } else if ("password".equals(field)) {
+                if ("email".equals(field) || "password".equals(field)) {
                     errors.append(error.getDefaultMessage()).append("; ");
                 }
             });
-
             if (errors.length() > 0) {
                 return ResponseEntity.badRequest().body(errors.toString());
             }
         }
         var loginResponse = userService.userLogin(data);
         if (loginResponse.getStatusCode() == HttpStatus.OK) {
+            UserEntity user = loginRepository.findByEmail(data.getEmail());
             String token = jwtUtil.generateToken(data.getEmail());
             return ResponseEntity.ok(Map.of(
                     "message", "Login success",
                     "token", token,
-                    "email", data.getEmail()
+                    "email", data.getEmail(),
+                    "userType", user.isUserType()
             ));
         } else {
             return loginResponse;
         }
     }
+
     @PostMapping("/admin-login")
     public ResponseEntity<?> loginAdmin(@Valid @RequestBody UserDto data, BindingResult result) {
         if (result.hasErrors()) {

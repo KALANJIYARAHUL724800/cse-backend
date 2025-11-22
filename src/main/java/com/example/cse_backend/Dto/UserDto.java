@@ -16,14 +16,24 @@ public class UserDto {
     @NotBlank(message = "Confirm Password is required")
     @Size(min = 8, max = 16, message = "Password must be between 8 and 16 characters")
     private String confirmPassword;
-    public UserDto(String name, String email, String password, String confirmPassword) {
+    private boolean userType;
+    public UserDto(String name, String email, String password, String confirmPassword,boolean userType) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
+        this.userType = userType;
     }
 
     public UserDto() {
+    }
+
+    public boolean isUserType() {
+        return userType;
+    }
+
+    public void setUserType(boolean userType) {
+        this.userType = userType;
     }
 
     public String getEmail() {

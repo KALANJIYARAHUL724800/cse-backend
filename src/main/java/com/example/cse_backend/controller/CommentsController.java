@@ -21,20 +21,18 @@ public class CommentsController {
     @Autowired
     private CommentsService commentsService;
 
-    @PostMapping("/insert")
-    public ResponseEntity<?> insert(@Valid @RequestBody CommentsDto data, BindingResult result) {
-        if (result.hasErrors()) {
-            StringBuilder errors = new StringBuilder();
-            result.getAllErrors().forEach(error ->
-                    errors.append(error.getDefaultMessage()).append("; "));
-            return ResponseEntity.badRequest().body(errors.toString());
-        }
+    @PostMapping("/insert/{postId}")
+    public ResponseEntity<?> insert(
+            @PathVariable Long postId,
+            @RequestBody CommentsEntity data) {
 
         try {
-            CommentsEntity savedComment = commentsService.insert(data);
+            CommentsEntity savedComment = commentsService.insert(postId, data);
             return ResponseEntity.ok(savedComment);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
         }
     }
 

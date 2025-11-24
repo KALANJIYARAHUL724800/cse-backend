@@ -25,7 +25,7 @@ public class PostService {
         PostEntity savedPost = postRespository.save(obj);
         CommentsEntity dummy = new CommentsEntity();
         dummy.setLikes(0L);
-        dummy.setComments("No comments yet");
+        dummy.setComments("");
         dummy.setPost(savedPost);
         commentsRepository.save(dummy);
         return savedPost;

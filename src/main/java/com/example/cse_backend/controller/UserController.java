@@ -81,11 +81,8 @@ public class UserController {
     public ResponseEntity<?> loginAdmin(@Valid @RequestBody UserDto data, BindingResult result) {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
-
-            // Check each field individually
             result.getFieldErrors().forEach(error -> {
                 String field = error.getField();
-                // Append each error message separately
                 if ("email".equals(field)) {
                     errors.append(error.getDefaultMessage()).append("; ");
                 } else if ("password".equals(field)) {
@@ -97,15 +94,15 @@ public class UserController {
                 return ResponseEntity.badRequest().body(errors.toString());
             }
         }
-
-        // Proceed with login if no validation errors
         var loginResponse = userService.userLogin(data);
         if (loginResponse.getStatusCode() == HttpStatus.OK) {
+            UserEntity user = loginRepository.findByEmail(data.getEmail());
             String token = jwtUtil.generateToken(data.getEmail());
             return ResponseEntity.ok(Map.of(
                     "message", "Login success",
                     "token", token,
-                    "email", data.getEmail()
+                    "email", data.getEmail(),
+                    "userType", user.isUserType()
             ));
         } else {
             return loginResponse;

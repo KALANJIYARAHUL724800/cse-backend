@@ -20,26 +20,28 @@ public class CommentsService {
     @Autowired
     private PostRespository postRepository;
 
-    public CommentsEntity insert(CommentsDto data) {
-        PostEntity post = postRepository.findById(data.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + data.getPostId()));
+    public CommentsEntity insert(Long postId, CommentsEntity data) {
+
+        PostEntity post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
 
         CommentsEntity obj = new CommentsEntity();
-        obj.setLikes(data.getLikes());
         obj.setComments(data.getComments());
-        obj.setPost(post); // crucial
+        obj.setLikes(data.getLikes() == null ? 0 : data.getLikes());
+
+        obj.setPost(post);
+
         return commentsRepository.save(obj);
     }
+
 
     public List<CommentsEntity> show() {
         return commentsRepository.findAll();
     }
-
     public CommentsEntity find(Long id) {
         return commentsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
     }
-
     public CommentsEntity update(Long id, CommentsDto data) {
         CommentsEntity obj = commentsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));

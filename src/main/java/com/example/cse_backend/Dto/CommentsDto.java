@@ -9,7 +9,6 @@ public class CommentsDto {
     @NotNull(message = "Likes cannot be null")
     private Long likes;
 
-    @NotBlank(message = "Comment text cannot be blank")
     private String comments;
 
     @NotNull(message = "Post ID is required")

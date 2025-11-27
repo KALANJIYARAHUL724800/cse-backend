@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "users",
@@ -23,6 +24,18 @@ public class UserEntity {
     private String password;
     @Column(name = "confirm_password",nullable = false)
     private String confirmPassword;
+    @Column(name = "profile_image")
+    private String profile;
+    @Column(name = "mobile")
+    private Long mobile;
+    @Lob
+    @Column(name = "bio")
+    private String bio;
+    @Column(name = "dob")
+    private String dob;
+    @Lob
+    @Column(name = "address")
+    private String address;
     @Column(name = "active_flag",nullable = false)
     private boolean active_flag = true;
     @Column(name = "user_type",nullable = false)
@@ -30,7 +43,8 @@ public class UserEntity {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
+    @Column(name = "gender")
+    private String gender;
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -116,5 +130,84 @@ public class UserEntity {
 
     public UserEntity(){
 
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public Long getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(Long mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public UserEntity(String name, String email, String password, String confirmPassword, String profile, Long mobile, String bio, String dob, String address) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.profile = profile;
+        this.mobile = mobile;
+        this.bio = bio;
+        this.dob = dob;
+        this.address = address;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public UserEntity(Long id, String name, String email, String password, String confirmPassword, String profile, Long mobile, String bio, String dob, String address, boolean active_flag, boolean userType, LocalDateTime createdAt, String gender, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.profile = profile;
+        this.mobile = mobile;
+        this.bio = bio;
+        this.dob = dob;
+        this.address = address;
+        this.active_flag = active_flag;
+        this.userType = userType;
+        this.createdAt = createdAt;
+        this.gender = gender;
+        this.updatedAt = updatedAt;
     }
 }

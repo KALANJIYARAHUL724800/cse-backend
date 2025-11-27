@@ -2,6 +2,7 @@ package com.example.cse_backend.services;
 
 import com.example.cse_backend.Dto.ChangePasswordDto;
 import com.example.cse_backend.Dto.MessageInfoDto;
+import com.example.cse_backend.Dto.ProfileDto;
 import com.example.cse_backend.Dto.UserDto;
 import com.example.cse_backend.Entity.UserEntity;
 import com.example.cse_backend.repository.LoginRepository;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -85,4 +88,24 @@ public class UserService {
         return loginRepository.countStudents();
     }
 
+    public UserEntity findEmailtoData(String email)
+    {
+        return loginRepository.findByEmail(email);
+    }
+    public ResponseEntity<?> updateUserRecord(String email,ProfileDto data) {
+        UserEntity user = loginRepository.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email not found!");
+        }
+        user.setName(data.getName());
+        user.setEmail(data.getEmail());
+        user.setBio(data.getBio());
+        user.setDob(data.getDob());
+        user.setAddress(data.getAddress());
+        user.setProfile(data.getImageUrl());
+        user.setMobile(data.getPhone());
+        user.setGender(data.getGender());
+        loginRepository.save(user);
+        return ResponseEntity.ok("User details updated successfully!");
+    }
 }

@@ -1,8 +1,12 @@
 package com.example.cse_backend.Dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.Date;
 
 public class UserDto {
     @NotBlank(message = "Name is required")
@@ -17,7 +21,87 @@ public class UserDto {
     @Size(min = 8, max = 16, message = "Password must be between 8 and 16 characters")
     private String confirmPassword;
     private boolean userType;
-    public UserDto(String name, String email, String password, String confirmPassword,boolean userType) {
+    private String profile;
+    private Long mobile;
+    private String bio;
+    private Date dob;
+    private String address;
+    private String gender;
+
+    public UserDto(String name, String email, String password, String confirmPassword, boolean userType, String profile, Long mobile, String bio, Date dob) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.userType = userType;
+        this.profile = profile;
+        this.mobile = mobile;
+        this.bio = bio;
+        this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public UserDto(String name, String email, String password, String confirmPassword, boolean userType, String profile, Long mobile, String bio, Date dob, String address) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.userType = userType;
+        this.profile = profile;
+        this.mobile = mobile;
+        this.bio = bio;
+        this.dob = dob;
+        this.address = address;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public Long getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(Long mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UserDto(String name, String email, String password, String confirmPassword, boolean userType) {
         this.name = name;
         this.email = email;
         this.password = password;

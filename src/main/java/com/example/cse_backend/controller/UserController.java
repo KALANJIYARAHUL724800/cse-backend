@@ -2,6 +2,7 @@ package com.example.cse_backend.controller;
 
 import com.example.cse_backend.Dto.ChangePasswordDto;
 import com.example.cse_backend.Dto.MessageInfoDto;
+import com.example.cse_backend.Dto.ProfileDto;
 import com.example.cse_backend.Dto.UserDto;
 import com.example.cse_backend.Entity.UserEntity;
 import com.example.cse_backend.config.JwtUtil;
@@ -164,6 +165,15 @@ public class UserController {
     @GetMapping("/countStudents")
     public ResponseEntity<?> countStudents() {
         Long count = userService.countStudents();
-        return ResponseEntity.ok(count); // Always return count
+        return ResponseEntity.ok(count);
+    }
+    @GetMapping("/getdata/{email}")
+    public ResponseEntity<?> getEmailToData(@PathVariable  String email) {
+        return new ResponseEntity<>(userService.findEmailtoData(email),HttpStatus.OK);
+    }
+    @PutMapping("/update-record/{email}")
+    public ResponseEntity<?> updateRecord(@PathVariable String email, @RequestBody  ProfileDto data)
+    {
+        return new ResponseEntity<>(userService.updateUserRecord(email,data),HttpStatus.OK);
     }
 }

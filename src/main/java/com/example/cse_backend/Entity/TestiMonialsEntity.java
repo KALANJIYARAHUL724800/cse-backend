@@ -24,6 +24,7 @@ public class TestiMonialsEntity {
     @Column(name = "name",nullable = false)
     private String name;
 
+    @Id
     @Column(name = "enroll_no",nullable = false)
     private Long enrollno;
 

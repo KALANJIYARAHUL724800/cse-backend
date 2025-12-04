@@ -48,8 +48,6 @@ private TestiMonialsRepository testiMonialsRepository;
         if (image != null && !image.isEmpty()) {
             obj.setImage(image.getBytes());
         }
-        // else keep old image as-is
-
         return testiMonialsRepository.save(obj);
     }
 

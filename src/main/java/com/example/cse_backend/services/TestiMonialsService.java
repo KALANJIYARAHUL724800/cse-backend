@@ -16,7 +16,7 @@ public class TestiMonialsService {
 @Autowired
 private TestiMonialsRepository testiMonialsRepository;
 
-    public TestiMonialsEntity insert(TestiMonialsDto dto, byte[] fileBytes) {
+    public TestiMonialsEntity insert(TestiMonialsDto dto) {
         TestiMonialsEntity entity = new TestiMonialsEntity();
         entity.setName(dto.getName());
         entity.setEnrollno(dto.getEnrollno());
@@ -24,20 +24,15 @@ private TestiMonialsRepository testiMonialsRepository;
         entity.setText(dto.getText());
         entity.setPlace(dto.getPlace());
         entity.setImageUrl(dto.getImageUrl());
-        if (fileBytes != null && fileBytes.length > 0) {
-            entity.setImage(fileBytes);
-        } else {
-            entity.setImage(null);
-        }
         return testiMonialsRepository.save(entity);
     }
 
     public List<TestiMonialsEntity> showAll() {
         return testiMonialsRepository.findAll();
     }
-    public TestiMonialsEntity update(Long id, TestiMonialsDto data, MultipartFile image) throws IOException {
-        TestiMonialsEntity obj = testiMonialsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Testimonial not found"));
+    public TestiMonialsEntity updateByEnrollno(Long enrollno, TestiMonialsDto data) throws IOException {
+        TestiMonialsEntity obj = testiMonialsRepository.findByEnrollNo(enrollno)
+                .orElseThrow(() -> new RuntimeException("Testimonial not found with enrollno: " + enrollno));
 
         obj.setName(data.getName());
         obj.setEnrollno(data.getEnrollno());
@@ -45,14 +40,12 @@ private TestiMonialsRepository testiMonialsRepository;
         obj.setText(data.getText());
         obj.setPlace(data.getPlace());
         obj.setImageUrl(data.getImageUrl());
-        if (image != null && !image.isEmpty()) {
-            obj.setImage(image.getBytes());
-        }
+
         return testiMonialsRepository.save(obj);
     }
 
     public TestiMonialsEntity find(Long id) {
-        return testiMonialsRepository.findById(id)
+        return testiMonialsRepository.findByEnrollNo(id)
                 .orElseThrow(() -> new RuntimeException("Testimonial not found"));
     }
 }

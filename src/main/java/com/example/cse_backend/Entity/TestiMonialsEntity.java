@@ -1,6 +1,7 @@
 package com.example.cse_backend.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,10 +25,8 @@ public class TestiMonialsEntity {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Id
     @Column(name = "enroll_no",nullable = false)
     private Long enrollno;
-
     @Column(name = "course_name",nullable = false)
     private String courseName;
 

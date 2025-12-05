@@ -33,7 +33,7 @@ public class PostService {
 
     public List<PostEntity> findAll()
     {
-        return postRespository.findAll();
+        return postRespository.getAllPostsDesc();
     }
     public PostEntity findOne(Long id) {
         return postRespository.findById(id)

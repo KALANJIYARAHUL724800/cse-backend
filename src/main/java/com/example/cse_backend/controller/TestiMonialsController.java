@@ -36,14 +36,8 @@ public class TestiMonialsController {
             }
             return ResponseEntity.badRequest().body(errors);
         }
-
         try {
-            byte[] fileBytes = null;
-            if (image != null && !image.isEmpty()) {
-                fileBytes = image.getBytes();
-            }
-
-            Object saved = testiMonialsService.insert(dto, fileBytes);
+            Object saved = testiMonialsService.insert(dto);
             return ResponseEntity.ok(saved);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
@@ -51,7 +45,6 @@ public class TestiMonialsController {
             return ResponseEntity.status(500).body(error);
         }
     }
-
 
     @GetMapping("/all")
     public ResponseEntity<?> showAll()
@@ -71,11 +64,10 @@ public class TestiMonialsController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
-            @ModelAttribute TestiMonialsDto dto,
-            @RequestParam(value = "image", required = false) MultipartFile image
+            @RequestBody TestiMonialsDto dto
     ) {
         try {
-            TestiMonialsEntity updated = testiMonialsService.update(id, dto, image);
+            TestiMonialsEntity updated = testiMonialsService.updateByEnrollno(id, dto);
             return ResponseEntity.ok(updated);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

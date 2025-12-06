@@ -45,6 +45,8 @@ public class UserEntity {
     private LocalDateTime createdAt;
     @Column(name = "gender")
     private String gender;
+    @Column(name = "enrollno")
+    private Integer enrollNo;
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
@@ -132,6 +134,14 @@ public class UserEntity {
 
     }
 
+    public Integer getEnrollNo() {
+        return enrollNo;
+    }
+
+    public void setEnrollNo(Integer enrollNo) {
+        this.enrollNo = enrollNo;
+    }
+
     public String getProfile() {
         return profile;
     }
@@ -173,7 +183,7 @@ public class UserEntity {
         this.dob = dob;
     }
 
-    public UserEntity(String name, String email, String password, String confirmPassword, String profile, Long mobile, String bio, String dob, String address) {
+    public UserEntity(String name, String email, String password, String confirmPassword, String profile, Long mobile, String bio, String dob, String address,Integer enrollNo) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -183,6 +193,7 @@ public class UserEntity {
         this.bio = bio;
         this.dob = dob;
         this.address = address;
+        this.enrollNo = enrollNo;
     }
 
     public String getGender() {

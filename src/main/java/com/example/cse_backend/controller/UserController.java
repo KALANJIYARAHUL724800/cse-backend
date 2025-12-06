@@ -176,4 +176,9 @@ public class UserController {
     {
         return new ResponseEntity<>(userService.updateUserRecord(email,data),HttpStatus.OK);
     }
+    @GetMapping("/students-details")
+    public ResponseEntity<?> getAllStudents()
+    {
+        return new ResponseEntity<>(loginRepository.getAllStudentsBasicInfo(),HttpStatus.OK);
+    }
 }

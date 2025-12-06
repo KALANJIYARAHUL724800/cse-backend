@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
@@ -27,6 +28,8 @@ public class UserDto {
     private Date dob;
     private String address;
     private String gender;
+    @NotNull(message = "Enroll number is required")
+    private Integer enrollNo;
 
     public UserDto(String name, String email, String password, String confirmPassword, boolean userType, String profile, Long mobile, String bio, Date dob) {
         this.name = name;
@@ -38,6 +41,23 @@ public class UserDto {
         this.mobile = mobile;
         this.bio = bio;
         this.dob = dob;
+    }
+    public UserDto(String name, Integer enrollNo, String email, Long mobile,
+                   String gender, String address) {
+        this.name = name;
+        this.enrollNo = enrollNo;
+        this.email = email;
+        this.mobile = mobile;
+        this.gender = gender;
+        this.address = address;
+    }
+
+    public Integer getEnrollNo() {
+        return enrollNo;
+    }
+
+    public void setEnrollNo(Integer enrollNo) {
+        this.enrollNo = enrollNo;
     }
 
     public String getGender() {

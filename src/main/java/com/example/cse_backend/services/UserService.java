@@ -37,6 +37,7 @@ public class UserService {
         user.setEmail(data.getEmail());
         user.setPassword(passwordEncoder.encode(data.getPassword()));
         user.setConfirmPassword(passwordEncoder.encode(data.getConfirmPassword()));
+        user.setEnrollNo(data.getEnrollNo());
         UserEntity savedUser = loginRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -107,5 +108,10 @@ public class UserService {
         user.setGender(data.getGender());
         loginRepository.save(user);
         return ResponseEntity.ok("User details updated successfully!");
+    }
+
+    public List<UserDto> getAllStudentsBasicInfo()
+    {
+        return loginRepository.getAllStudentsBasicInfo();
     }
 }

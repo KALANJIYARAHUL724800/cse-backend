@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("api/posts")
@@ -62,4 +64,11 @@ public class PostController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @GetMapping("/count-posts")
+    public Long getPostCount(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        Long count = postService.countPostsByDate(localDate);
+        return count != null ? count : 0L; 
+    }
+
 }

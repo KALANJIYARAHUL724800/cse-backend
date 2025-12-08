@@ -114,4 +114,12 @@ public class UserService {
     {
         return loginRepository.getAllStudentsBasicInfo();
     }
+    public UserDto getStudentByEnrollNo(Long enrollNo)
+    {
+        return loginRepository.getStudentByEnrollNo(enrollNo);
+    }
+    public UserDto getStudentByMobile(Long mobileNo)
+    {
+        return loginRepository.getStudentByMobile(mobileNo);
+    }
 }

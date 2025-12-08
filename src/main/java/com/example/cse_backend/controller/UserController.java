@@ -181,4 +181,15 @@ public class UserController {
     {
         return new ResponseEntity<>(loginRepository.getAllStudentsBasicInfo(),HttpStatus.OK);
     }
+
+    @GetMapping("/searchby-enrollno/{enrollNo}")
+    public ResponseEntity<?> searchEnrollNoRecord(@PathVariable Long enrollNo)
+    {
+        return new ResponseEntity<>(loginRepository.getStudentByEnrollNo(enrollNo),HttpStatus.OK);
+    }
+    @GetMapping("/searchby-mobileno/{mobileNo}")
+    public ResponseEntity<?> searchMobileNoRecord(@PathVariable Long mobileNo)
+    {
+        return new ResponseEntity<>(loginRepository.getStudentByMobile(mobileNo),HttpStatus.OK);
+    }
 }

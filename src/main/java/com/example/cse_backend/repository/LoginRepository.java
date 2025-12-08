@@ -30,4 +30,26 @@ public interface LoginRepository extends JpaRepository<UserEntity,Long> {
             "WHERE u.userType = false")
     List<UserDto> getAllStudentsBasicInfo();
 
+    @Query("SELECT new com.example.cse_backend.Dto.UserDto(" +
+            "u.name, " +
+            "u.enrollNo, " +
+            "u.email, " +
+            "u.mobile, " +
+            "u.gender, " +
+            "u.address) " +
+            "FROM UserEntity u " +
+            "WHERE u.userType = false AND u.enrollNo = :enrollNo")
+    UserDto getStudentByEnrollNo(Long enrollNo);
+
+    @Query("SELECT new com.example.cse_backend.Dto.UserDto(" +
+            "u.name, " +
+            "u.enrollNo, " +
+            "u.email, " +
+            "u.mobile, " +
+            "u.gender, " +
+            "u.address) " +
+            "FROM UserEntity u " +
+            "WHERE u.userType = false AND u.mobile = :mobile")
+    UserDto getStudentByMobile(Long mobile);
+
 }

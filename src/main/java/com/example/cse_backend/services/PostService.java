@@ -8,6 +8,7 @@ import com.example.cse_backend.repository.PostRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -49,5 +50,9 @@ public class PostService {
     public void deletePost(Long id)
     {
         postRespository.deleteById(id);
+    }
+
+    public Long countPostsByDate(LocalDate date) {
+        return postRespository.countPostsByDate(date);
     }
 }

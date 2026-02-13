@@ -68,7 +68,7 @@ public class PostController {
     public Long getPostCount(@RequestParam String date) {
         LocalDate localDate = LocalDate.parse(date);
         Long count = postService.countPostsByDate(localDate);
-        return count != null ? count : 0L; 
+        return count != null ? count : 0L;
     }
 
 }

@@ -6,6 +6,8 @@ import com.example.cse_backend.repository.CertificateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CertificateService {
     @Autowired
@@ -25,4 +27,9 @@ public class CertificateService {
         obj.setGrade(data.getGrade());
         return certificateRepository.save(obj);
     }
+
+    public List<CertificateEntity> findByEnrollNo(Integer enrollNumber) {
+        return certificateRepository.findByEnrollNo(enrollNumber);
+    }
+
 }

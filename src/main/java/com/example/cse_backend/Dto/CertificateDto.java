@@ -19,10 +19,11 @@ public class CertificateDto {
     @NotBlank(message = "grade name is required")
     private String grade;
     @NotNull(message = "enroll number is required")
-    private int enrollNumber;
+    private Integer enrollNumber;
     @NotNull(message = "certificate date is required")
     private LocalDate certificateDate;
     private String institutionName;
+    @NotBlank(message = "location is requrired")
     private String location;
     @NotNull(message = "join date date is required")
     private LocalDate joinDate;

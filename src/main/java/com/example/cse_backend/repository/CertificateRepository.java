@@ -14,4 +14,5 @@ public interface CertificateRepository extends JpaRepository<CertificateEntity,L
     @Query("SELECT c FROM CertificateEntity c WHERE c.enrollNumber = :enrollNo")
     List<CertificateEntity> findByEnrollNo(@Param("enrollNo") Integer enrollNo);
 
+    boolean existsByEnrollNumber(Integer enrollNumber);
 }

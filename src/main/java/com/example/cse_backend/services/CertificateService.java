@@ -15,6 +15,9 @@ public class CertificateService {
 
     public CertificateEntity uploadCertificateData(CertificateDto data)
     {
+        if (certificateRepository.existsByEnrollNumber(data.getEnrollNumber())) {
+            return null;
+        }
         CertificateEntity obj = new CertificateEntity();
         obj.setName(data.getName());
         obj.setEnrollNumber(data.getEnrollNumber());

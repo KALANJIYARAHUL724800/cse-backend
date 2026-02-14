@@ -9,11 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/certificate")
@@ -27,8 +25,6 @@ public class CertificateController {
     public ResponseEntity<?> insertCertificateDate(@RequestBody @Valid  CertificateDto certificateDto, BindingResult bindingResult)
     {
         if (bindingResult.hasErrors()) {
-
-            // Prepare a map with default empty strings for all fields
             Map<String, String> errorsMap = new LinkedHashMap<>();
             errorsMap.put("name", "");
             errorsMap.put("certificateName", "");
@@ -40,7 +36,6 @@ public class CertificateController {
             errorsMap.put("location", "");
             errorsMap.put("enrollNumber", "");
 
-            // Fill the map with actual error messages
             for (FieldError error : bindingResult.getFieldErrors()) {
                 String field = error.getField();
                 errorsMap.put(field, error.getDefaultMessage());
@@ -48,7 +43,13 @@ public class CertificateController {
 
             return ResponseEntity.badRequest().body(errorsMap);
         }
-        return new ResponseEntity<>(certificateService.uploadCertificateData(certificateDto), HttpStatus.OK);
+        CertificateEntity result = certificateService.uploadCertificateData(certificateDto);
+        if (result == null) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body("Enroll Number already exists");
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/find")
